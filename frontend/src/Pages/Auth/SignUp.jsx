@@ -14,6 +14,34 @@ const SignUp = ({ setCurrentPage }) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
+
+    let profileImgUrl = "";
+
+    if (!fullName) {
+      setError("Please enter your name");
+      return;
+    }
+    if (!validateEmail(email)) {
+      setError("Please enter your email");
+      return;
+    }
+    if (!password) {
+      setError("Please enter your password");
+      return;
+    }
+
+    setError("")
+    // signup API call
+
+    try {
+
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again later.");
+      }
+    }
   };
   return (
     <div className='w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center'>
