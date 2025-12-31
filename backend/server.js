@@ -2,16 +2,19 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
+
 const connectDB = require("./config/db");
+
 const authRoutes = require("./routes/authRoutes");
+const sessionRoutes = require("./routes/sessionRoutes");
 
 const app = express();
 
 //middleware to cors
 app.use(cors({
-    origin:"*",
-    methods:["GET","POST","PUT","DELETE"],
-    allowedHeaders:["Content-Type","Authorization"]
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 connectDB();
@@ -21,15 +24,15 @@ app.use(express.json());
 
 //Routes
 
-app.use("/api/auth",authRoutes);
-// app.use("/api/session",sessionRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/sessions", sessionRoutes);
 // app.use("/api/questions",questionRoutes);
 
 // app.use("/api/ai/generate-questions",Protect, generateInterviewQuestions);
 // app.use("/api/ai/generate-explanation",Protect, generateConceptExplanation);
 
 //Server uploads folder
-app.use("/uploads", express.static(path.join(__dirname, "uploads"),{}));
+app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
 
 //Start Server 
 const PORT = process.env.PORT;
