@@ -8,6 +8,8 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const sessionRoutes = require("./routes/sessionRoutes");
 const questionRoutes = require("./routes/questionRoutes");
+const { protect } = require("./middlewares/authMiddleware");
+const { generateInterviewQuestions, generateConceptExplaination } = require("./controllers/aiController");
 
 const app = express();
 
@@ -24,13 +26,16 @@ connectDB();
 app.use(express.json());
 
 //Routes
-
+//auth Routes
 app.use("/api/auth", authRoutes);
+//session Routes
 app.use("/api/sessions", sessionRoutes);
+//question Routes
 app.use("/api/questions",questionRoutes);
 
-// app.use("/api/ai/generate-questions",Protect, generateInterviewQuestions);
-// app.use("/api/ai/generate-explanation",Protect, generateConceptExplanation);
+//ai Routes
+app.use("/api/ai/generate-questions",protect, generateInterviewQuestions);
+app.use("/api/ai/generate-explanation", protect, generateConceptExplaination);
 
 //Server uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
