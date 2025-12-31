@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../Components/Inputs/Input';
 import { validateEmail } from '../../Utils/helper';
+import axiosInstance from '../../Utils/axiosInstance';
+import { API_PATHS } from '../../Utils/apiPaths';
 
 const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = useState("");
@@ -28,9 +31,23 @@ const Login = ({ setCurrentPage }) => {
     // login API call
 
     try {
+      const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
+        email,
+        password,
+      });
+
+      const { token } = response.data;
+      if (token) {
+        localStorage.setItem("token", token);
+        navigate("/dashboard");
+      }
 
     } catch (error) {
-      if (error.response && error.response.data.message) {
+      if (error.response && error.response.status === 401) {
+        setPassword("");
+        toast.error("Invalid credentials.", { duration: 2000 });
+      }
+      else if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
         setError("Something went wrong. Please try again later.");
@@ -42,6 +59,7 @@ const Login = ({ setCurrentPage }) => {
 
   return (
     <div className='w-[90vw] md:w-[33vw] p-7 flex flex-col justify-center'>
+      <Toaster />
       <h3 className='text-lg font-semibold text-black'>Welcome Back</h3>
       <p className='text-xs text-slate-700 mt-[5px] mb-6' >
         Please enter your credentials to access your account.
