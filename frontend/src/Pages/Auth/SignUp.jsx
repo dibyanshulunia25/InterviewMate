@@ -1,7 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Input from '../../Components/Inputs/Input';
 import ProfilePhotoSelector from '../../Components/Inputs/ProfilePhotoSelector';
+import { UserContext } from '../../Context/UserContext';
+import { validateEmail } from '../../Utils/helper';
+import axiosInstance from '../../Utils/axiosInstance';
+import { API_PATHS } from '../../Utils/apiPaths';
+import uploadImage from '../../Utils/uploadImage';
 
 const SignUp = ({ setCurrentPage }) => {
   const [profilePic, setProfilePic] = useState(null)
@@ -10,14 +15,16 @@ const SignUp = ({ setCurrentPage }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
+  const { updateUser } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    let profileImgUrl = "";
+    let profileImageUrl = "";
 
-    if (!fullName) {
+    if (!name) {
       setError("Please enter your name");
       return;
     }
@@ -31,10 +38,28 @@ const SignUp = ({ setCurrentPage }) => {
     }
 
     setError("")
+
     // signup API call
-
     try {
+      //Upload image if present
+      if(profilePic){
+        const ImgUploadRes=await uploadImage(profilePic);
+        profileImageUrl=ImgUploadRes.imageUrl || "";
+      }
 
+      const response=await axiosInstance.post(API_PATHS.AUTH.REGISTER,{
+        name,
+        email,
+        password,
+        profileImageUrl,
+      });
+
+      const {token}=response.data;
+      if(token){
+        localStorage.setItem("token",token);
+        updateUser(response.data);
+        navigate("/dashboard");
+      }
     } catch (error) {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
@@ -51,7 +76,7 @@ const SignUp = ({ setCurrentPage }) => {
       </p>
       <form onSubmit={handleSignUp}>
 
-        <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}/>
+        <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
         <div className='grid grid-cols-1 md:grid-cols-1 gap-6'>
           <Input value={name} onChange={({ target }) => setName(target.value)} label="Name" placeHolder="John Doe" type="text" />
