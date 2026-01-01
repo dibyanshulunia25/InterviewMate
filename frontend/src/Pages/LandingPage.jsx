@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import HERO_IMG from "../assets/hero-img.png"
 import { APP_FEATURES } from '../Utils/data'
 import { useNavigate } from 'react-router-dom'
@@ -6,14 +6,23 @@ import {LuSparkles} from 'react-icons/lu'
 import Modal from '../Components/Modal'
 import Login from '../Pages/Auth/Login'
 import SignUp from '../Pages/Auth/SignUp'
+import { UserContext } from '../Context/UserContext'
+import ProfileInfoCard from '../Components/Cards/ProfileInfoCard'
 
 const LandingPage = () => {
+  const {user} = useContext(UserContext);
   const navigate = useNavigate();
 
   const [openAuthModal, setOpenAuthModal] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
-  const handleCTA = () => { };
+  const handleCTA = () => {
+    if(!user) {
+      setOpenAuthModal(true);
+    } else {
+      navigate("/dashboard");
+    }
+  };
 
   return (
     <>
@@ -24,9 +33,13 @@ const LandingPage = () => {
             <div className='text-xl text-black font-bold'>
               InterviewMate
             </div>
-            <button onClick={() => setOpenAuthModal(true)} className='bg-linear-to-r from-[#ff8000] to-[#e5aa6e] text-sm font-semibold text-white px-7 py-3 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer'>
+            {user ? (
+              <ProfileInfoCard />
+            ) : (
+              <button onClick={() => setOpenAuthModal(true)} className='bg-linear-to-r from-[#ff8000] to-[#e5aa6e] text-sm font-semibold text-white px-7 py-3 rounded-full hover:bg-black hover:text-white border border-white transition-colors cursor-pointer'>
               Login / SignUp
             </button>
+            )}
           </header>
 
           {/* Hero Content */}
