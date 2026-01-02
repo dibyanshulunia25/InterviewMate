@@ -18,7 +18,7 @@ export const API_PATHS = {
 
     SESSION:{
         CREATE: "/api/sessions/create", //Create session
-        GET : "/api/sessions/my-sessions", //Get session
+        GET_ALL : "/api/sessions/my-sessions", //Get session
         GET_ONE: (id)=> `/api/sessions/${id}`, //Get session by id
         DELETE: (id)=> `/api/sessions/${id}`, //Delete session by id
     },
