@@ -7,7 +7,7 @@ const questionAnswerPrompt = (role, experience, topicsToFocus, numberOfQuestions
     - Focus Topics: ${topicsToFocus}
     - Write ${numberOfQuestions} interview questions.
     - For each question, generate a detailed but beginner-friendly answer.
-    - If the answer needs a code example, add a small code block inside.(Maintain no fromatting in the code block so that it can be easily copied and pasted into word documents)
+    - If the answer needs a code example, add a small code block inside.
     - Keep formatting very clean.
     - Return a pure JSON array like:
     [
@@ -28,7 +28,7 @@ const conceptExplainPrompt = (question) => (`
 - Explain the following interview question and its concept in depth as if you're teaching a beginner developer.
 - Question: "${question}"
 - After the explanation, provide a short and clear title that summarizes the concept for the article or page header
-- If the explanation includes a code example, provide a small code block.(Maintain no fromatting in the code block so that it can be easily copied and pasted into word documents)
+- If the explanation includes a code example, provide a small code block.
 - Keep the formatting very clean and clear.
 - Return the result as a valid JSON object in the following format:
     {

@@ -6,10 +6,10 @@ const DashboardLayout = ({children}) => {
 
     const {user} = useContext(UserContext);
   return (
-    <div>
+    <div >
         <Navbar />
 
-        {user && <div>
+        {user && <div className='p-4'>
             {children}
         </div>}
     </div>

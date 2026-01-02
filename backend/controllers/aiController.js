@@ -29,8 +29,6 @@ exports.generateInterviewQuestions = async (req, res) => {
         const cleanedText = rawText
             .replace(/^```json\s*/, "") //remove starting ```json
             .replace(/```$/, "") //remove ending ```
-            .replace(/\\n/g, "")
-            .replace(/\*\**/g, "")
             .trim(); //remove leading and trailing whitespace
 
         //parsing response text
@@ -67,8 +65,6 @@ exports.generateConceptExplaination = async (req, res) => {
         const cleanedText = rawText
             .replace(/^```json\s*/, "") //remove starting ```json
             .replace(/```$/, "") //remove ending ```
-            .replace(/\\n/g, "")
-            .replace(/\*\**/g, "") //remove new lines
             .trim(); //remove leading and trailing whitespace
 
         //parsing response text
