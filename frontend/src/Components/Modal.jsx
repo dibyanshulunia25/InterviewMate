@@ -10,7 +10,7 @@ const Modal = ({ children, isOpen, onClose, title, hideHeader }) => {
       <div className={`relative flex flex-col bg-white shadow-lg rounded-lg overflow-hidden`}>
         {/* Modal Header  */}
         {!hideHeader && (
-          <div className="flex items-center justify-between p-4 border-b border-gray-200">
+          <div className="flex items-center justify-between p-4 ">
             <h3 className="md:text-lg font-medium text-gray-900">{title}</h3>
           </div>
         )}
