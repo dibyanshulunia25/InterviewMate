@@ -83,21 +83,29 @@ The application should now be running at `http://localhost:5173` (or the port sh
 ## 📂 Project Structure
 
 ```bash
-interview-mate/
-├── backend/                # Node.js/Express Backend
-│   ├── config/             # DB Connection
-│   ├── controllers/        # Route Logic
-│   ├── models/             # Mongoose Models (User, Question, Session)
-│   ├── routes/             # API Routes
-│   └── server.js           # Entry point
-│
-└── frontend/               # React Frontend
+InterviewMate/
+├── backend/
+│   ├── config/
+│   │   └── db.js
+│   ├── controllers/
+│   ├── middlewares/
+│   ├── models/
+│   ├── routes/
+│   ├── uploads/
+│   ├── utils/
+│   └── server.js
+└── frontend/
+    ├── assests/
     ├── src/
-    │   ├── Components/     # Reusable UI Components
-    │   ├── Pages/          # Application Pages (Auth, Home, InterviewPrep)
-    │   ├── Context/        # Application State
-    │   └── assets/         # Static Assets
-    └── index.html
+    │   ├── assets/
+    │   ├── Components/
+    │   ├── Context/
+    │   ├── Pages/
+    │   ├── Utils/
+    │   ├── App.jsx
+    │   ├── index.css
+    │   └── main.jsx
+    └── package.json
 ```
 
 ## 🤝 Contributing
