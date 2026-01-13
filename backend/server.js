@@ -40,14 +40,6 @@ app.use("/api/ai/generate-explanation", protect, generateConceptExplaination);
 //Server uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads"), {}));
 
-// Serve frontend static files
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-
-// Handle SPA routing: serve index.html for any unknown route
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist", "index.html"));
-});
-
 //Start Server 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
