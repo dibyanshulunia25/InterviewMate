@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+import { LuLoader } from 'react-icons/lu';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../Components/Inputs/Input';
 import { validateEmail } from '../../Utils/helper';
@@ -11,6 +12,7 @@ const Login = ({ setCurrentPage }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { updateUser } = useContext(UserContext);
 
@@ -32,6 +34,7 @@ const Login = ({ setCurrentPage }) => {
 
     setError("")
     // login API call
+    setIsLoading(true);
 
     try {
       const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, {
@@ -56,6 +59,8 @@ const Login = ({ setCurrentPage }) => {
       } else {
         setError("Something went wrong. Please try again later.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -72,7 +77,9 @@ const Login = ({ setCurrentPage }) => {
         <Input value={email} onChange={({ target }) => setEmail(target.value)} label="Email Address" placeHolder="john@example.com" type="email" />
         <Input value={password} onChange={({ target }) => setPassword(target.value)} label="Password" placeHolder="Enter your password" type="password" />
         {error && <p className='text-red-500 test-xs pb-2.5'>{error}</p>}
-        <button type='submit' className='btn-primary w-full mt-6'>Login</button>
+        <button disabled={isLoading} type='submit' className='btn-primary w-full mt-6 flex items-center justify-center'>
+          {isLoading ? <LuLoader className='animate-spin text-2xl text-white' /> : "Login"}
+        </button>
 
         <p className='text-s text-slate-800 mt-[5px] mb-6 text-center'>
           Don't have an account? <span onClick={() => setCurrentPage("signup")} className='text-primary cursor-pointer underline'>Register</span>

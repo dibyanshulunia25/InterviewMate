@@ -52,7 +52,7 @@ const Dashboard = () => {
         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-7 pt-1 pb-6'>
           {sessions?.length === 0 ? (
             <div className='col-span-1 lg:col-span-3 flex flex-col items-center justify-center p-10 bg-white/5 rounded-xl border border-white/10'>
-              <h3 className='text-xl text-white font-semibold'>There are no sessions available</h3>
+              <h3 className='text-xl text-gray-800 font-semibold'>There are no sessions available</h3>
               <p className='text-gray-400 mt-2'>Create a new session to get started</p>
             </div>
           ) :
